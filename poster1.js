@@ -112,13 +112,13 @@ const loadedSVGs = {};
 let assetsLoaded = 0;
 const totalAssets = posterConfig.length;
 
-function calculateGlobalScale() {
+async function calculateGlobalScale() {
     return (canvasWidth * globalMargin / posterConfig[0].width) < (canvasHeight * globalMargin / posterConfig[0].height) ?
         (canvasWidth * globalMargin / posterConfig[0].width) :
         (canvasHeight * globalMargin / posterConfig[0].height);
 }
 
-function calculateCenterOffset() {
+async function calculateCenterOffset() {
     return {
         x: (canvasWidth / 2 / globalScale) - (posterConfig[0].width / 2),
         y: (canvasHeight / 2 / globalScale) - (posterConfig[0].height / 2)
@@ -126,9 +126,9 @@ function calculateCenterOffset() {
 }
 
 // Preload all SVG assets
-function preloadAssets() {
-    globalScale = calculateGlobalScale();
-    const offset = calculateCenterOffset();
+async function preloadAssets() {
+    globalScale = await calculateGlobalScale();
+    const offset = await calculateCenterOffset();
     centerOffsetX = offset.x;
     centerOffsetY = offset.y;
 
@@ -237,7 +237,7 @@ function setupInteractions() {
                 
                 // Update scale (event.scale = pinch scale factor)
                 if (event.scale !== 1) {
-                    const newScale = svgData.scale * event.scale;
+                    const newScale = svgData.scale * event.scale / 5;
                     svgData.scale = Math.max(0.1, Math.min(5, newScale));
                 }
                 
