@@ -213,10 +213,10 @@ function setupInteractions() {
             move(event) {
                 const target = event.target;
                 const svgData = loadedSVGs[target.id];
-
+                
                 svgData.offsetX += event.dx;
                 svgData.offsetY += event.dy;
-
+                
                 updateElementTransform(target, svgData);
             },
             end(event) {
@@ -227,35 +227,24 @@ function setupInteractions() {
         listeners: {
             start(event) {
                 event.target.style.zIndex = '10';
-                // Store initial values when gesture starts
-                event.target._initialScale = loadedSVGs[event.target.id].scale;
-                event.target._lastScale = 1;
-                event.target._scaleDamping = 0.2; // Adjust this value (0.1-0.5) for smoother scaling
             },
             move(event) {
                 const target = event.target;
                 const svgData = loadedSVGs[target.id];
-
+                
                 // Update rotation (event.da = delta angle)
                 svgData.rotation += event.da;
-
-                // Smooth scaling with damping
+                
+                // Update scale (event.scale = pinch scale factor)
                 if (event.scale !== 1) {
-                    const scaleChange = event.scale - target._lastScale;
-                    const dampedScaleChange = scaleChange * target._scaleDamping;
-                    const newScale = target._initialScale * (1 + dampedScaleChange);
-
+                    const newScale = svgData.scale * event.scale;
                     svgData.scale = Math.max(0.1, Math.min(5, newScale));
-                    target._lastScale = event.scale;
                 }
-
+                
                 updateElementTransform(target, svgData);
-            },
-            end(event) {
-                event.target.style.zIndex = '';
             }
         }
-    })
+    });
 
     // Add CSS for interactions
     const style = document.createElement('style');
