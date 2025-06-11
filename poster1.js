@@ -1,8 +1,105 @@
+
 // Configuration for the poster elements
 const posterConfig = [
-    // ... (your existing posterConfig array) ...
+    {
+        id: 'background',
+        url: 'assets/background.svg',
+        initialPosition: { x: 0, y: 0 },
+        width: 1984.2,
+        height: 2834.6001
+    },
+    {
+        id: 'char1',
+        url: 'assets/char1.svg',
+        initialPosition: { x: 64.7, y: 133 },
+        width: 195.4,
+        height: 193.6
+    },
+    {
+        id: 'char2',
+        url: 'assets/char2.svg',
+        initialPosition: { x: 61.7, y: 335.5 },
+        width: 200.1,
+        height: 185.9
+    },
+    {
+        id: 'char3',
+        url: 'assets/char3.svg',
+        initialPosition: { x: 86.3, y: 545.9 },
+        width: 149.5,
+        height: 178.8
+    },
+    {
+        id: 'char4',
+        url: 'assets/char4.svg',
+        initialPosition: { x: 69.9, y: 755.3 },
+        width: 178.8,
+        height: 131
+    },
+    {
+        id: 'char5',
+        url: 'assets/char5.svg',
+        initialPosition: { x: 104.8, y: 905.5 },
+        width: 113.7,
+        height: 181.1
+    },
+    {
+        id: 'text1',
+        url: 'assets/text1.svg',
+        initialPosition: { x: 139.4, y: 1770.5 },
+        width: 36.2,
+        height: 146
+    },
+    {
+        id: 'text2',
+        url: 'assets/text2.svg',
+        initialPosition: { x: 139.4, y: 1516.7 },
+        width: 36.1,
+        height: 217.8
+    },
+    {
+        id: 'text3',
+        url: 'assets/text3.svg',
+        initialPosition: { x: 139.4, y: 1247.3 },
+        width: 36.3,
+        height: 233.3
+    },
+    {
+        id: 'obj1',
+        url: 'assets/obj1.svg',
+        initialPosition: { x: 319.3, y: 190.4 },
+        width: 1417.3,
+        height: 876.1
+    },
+    {
+        id: 'obj2',
+        url: 'assets/obj2.svg',
+        initialPosition: { x: 484, y: 984.5 },
+        width: 1087.6,
+        height: 672.3
+    },
+    {
+        id: 'obj3',
+        url: 'assets/obj3.svg',
+        initialPosition: { x: 588.7, y: 1594.8 },
+        width: 878.5,
+        height: 543
+    },
+    {
+        id: 'obj4',
+        url: 'assets/obj4.svg',
+        initialPosition: { x: 687.1, y: 2086.2 },
+        width: 681.6,
+        height: 421.3
+    },
+    {
+        id: 'credits',
+        url: 'assets/credits.svg',
+        initialPosition: { x: 1919.7, y: 2338.2 },
+        width: 17.5,
+        height: 240.7
+    },
 ];
-
 let globalScale = 1;
 let globalMargin = 0.9;
 let canvasWidth = window.innerWidth;
