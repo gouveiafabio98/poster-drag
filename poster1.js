@@ -156,7 +156,7 @@ async function preloadAssets() {
                     offsetY: 0,
                     rotation: 0,
                     scale: 1,
-                    currentScale: globalScale
+                    currentScale: 1
                 };
 
                 assetsLoaded++;
@@ -237,7 +237,7 @@ function setupInteractions() {
                 
                 // Update scale (event.scale = pinch scale factor)
                 if (event.scale !== 1) {
-                    const newScale = svgData.scale * event.scale / 5;
+                    const newScale = svgData.scale * event.scale;
                     svgData.scale = Math.max(0.1, Math.min(5, newScale));
                 }
                 
