@@ -4,12 +4,26 @@ body {
 
 #poster {
     position: relative;
-    margin: 0 auto;
-    background-color: #f9f9f9;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    touch-action: none;
 }
 
 .draggable {
+    pointer-events: none;
     position: absolute;
-    touch-action: none;
-    user-select: none;
+    transform-origin: center;
+    will-change: transform;
+}
+
+.draggable svg {
+    pointer-events: visiblePainted;
+    width: 100%;
+    height: 100%;
+}
+
+.draggable svg * {
+    pointer-events: visiblePainted;
 }

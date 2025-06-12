@@ -156,7 +156,8 @@ async function preloadAssets() {
                     offsetY: 0,
                     rotation: 0,
                     scale: 1,
-                    currentScale: 1
+                    currentScale: 1,
+                    zIndex: item.id === 'background' ? 0 : 1
                 };
 
                 assetsLoaded++;
@@ -184,9 +185,26 @@ function initializePoster() {
 
     Object.values(loadedSVGs).forEach(svgData => {
         poster.appendChild(svgData.element);
+        svgData.element.style.zIndex = svgData.zIndex;
     });
 
     setupInteractions();
+}
+
+function updateZIndex(clickedId) {
+    const elements = Object.values(loadedSVGs).filter(
+        svgData => svgData.config.id !== 'background'
+    );
+
+    elements.sort((a, b) => a.element.style.zIndex - b.element.style.zIndex);
+
+    elements.forEach((element, index) => {
+        element.element.style.zIndex = index;
+    });
+
+    if (clickedId && clickedId !== 'background') {
+        loadedSVGs[clickedId].element.style.zIndex = elements.length + 1;
+    }
 }
 
 function setupInteractions() {
@@ -202,77 +220,49 @@ function setupInteractions() {
     }
 
     // Setup interactions for each draggable element
-    interact('.draggable').draggable({
-        inertia: false,
-        autoScroll: false,
-        allowFrom: 'path, circle, rect, polygon, g',
-        listeners: {
-            start(event) {
-                event.target.style.zIndex = '10';
-            },
-            move(event) {
-                const target = event.target;
-                const svgData = loadedSVGs[target.id];
-                
-                svgData.offsetX += event.dx;
-                svgData.offsetY += event.dy;
-                
-                updateElementTransform(target, svgData);
-            },
-            end(event) {
-                event.target.style.zIndex = '';
-            }
-        }
-    }).gesturable({
-        listeners: {
-            start(event) {
-                event.target.style.zIndex = '10';
-            },
-            move(event) {
-                const target = event.target;
-                const svgData = loadedSVGs[target.id];
-                
-                // Update rotation (event.da = delta angle)
-                svgData.rotation += event.da;
-                
-                // Update scale (event.scale = pinch scale factor)
-                if (event.scale !== 1) {
-                    const newScale = svgData.scale * event.scale;
-                    svgData.scale = Math.max(0.1, Math.min(5, newScale));
-                }
-                
-                updateElementTransform(target, svgData);
-            }
-        }
-    });
+    interact('.draggable:not(#background)')
+        .draggable({
+            inertia: false,
+            autoScroll: false,
+            allowFrom: 'path, circle, rect, polygon, g',
+            listeners: {
+                start(event) {
+                    const target = event.target;
+                    updateZIndex(target.id);
+                },
+                move(event) {
+                    const target = event.target;
+                    const svgData = loadedSVGs[target.id];
 
-    // Add CSS for interactions
-    const style = document.createElement('style');
-    style.textContent = `
-        #poster {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #f0f0f0;
-            touch-action: none;
-        }
-        .draggable { 
-            pointer-events: none; 
-            position: absolute;
-            transform-origin: center;
-            will-change: transform;
-        }
-        .draggable svg { 
-            pointer-events: visiblePainted; 
-            width: 100%; 
-            height: 100%;
-        }
-        .draggable svg * { 
-            pointer-events: visiblePainted; 
-        }
-    `;
-    document.head.appendChild(style);
+                    svgData.offsetX += event.dx;
+                    svgData.offsetY += event.dy;
+
+                    updateElementTransform(target, svgData);
+                }
+            }
+        }).gesturable({
+            listeners: {
+                start(event) {
+                    const target = event.target;
+                    updateZIndex(target.id);
+                },
+                move(event) {
+                    const target = event.target;
+                    const svgData = loadedSVGs[target.id];
+
+                    // Update rotation (event.da = delta angle)
+                    svgData.rotation += event.da;
+
+                    // Update scale (event.scale = pinch scale factor)
+                    if (event.scale !== 1) {
+                        const newScale = svgData.scale * event.scale;
+                        svgData.scale = Math.max(0.1, Math.min(5, newScale));
+                    }
+
+                    updateElementTransform(target, svgData);
+                }
+            }
+        });
 }
 
 // Handle window resize
