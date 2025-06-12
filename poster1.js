@@ -254,9 +254,11 @@ function setupInteractions() {
                     svgData.rotation += event.da;
 
                     if (event.scale !== 1) {
-                        const reducedScaleChange = 1 + ((event.scale - 1) / 3);
+                        const screenDiagonal = Math.sqrt(canvasWidth**2 + canvasHeight**2) / (window.devicePixelRatio * 96);
+                        const sensitivityFactor = Math.min(1, screenDiagonal / 10);
                         
-                        const newScale = svgData.scale * reducedScaleChange;
+                        const scaleChange = 1 + ((event.scale - 1) * sensitivityFactor);
+                        const newScale = svgData.scale * scaleChange;
                         svgData.scale = Math.max(0.1, Math.min(5, newScale));
                     }
 
