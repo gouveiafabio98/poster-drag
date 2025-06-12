@@ -253,9 +253,10 @@ function setupInteractions() {
                     // Update rotation (event.da = delta angle)
                     svgData.rotation += event.da;
 
-                    // Update scale (event.scale = pinch scale factor)
                     if (event.scale !== 1) {
-                        const newScale = svgData.scale * event.scale;
+                        const reducedScaleChange = 1 + ((event.scale - 1) / 3);
+                        
+                        const newScale = svgData.scale * reducedScaleChange;
                         svgData.scale = Math.max(0.1, Math.min(5, newScale));
                     }
 
