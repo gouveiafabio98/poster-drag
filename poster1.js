@@ -7,7 +7,7 @@ const posterConfig = [
         initialPosition: { x: 0, y: 0 },
         width: 1984.2,
         height: 2834.6001
-    },
+    },/*
     {
         id: 'char1',
         url: 'assets/char1.svg',
@@ -63,14 +63,14 @@ const posterConfig = [
         initialPosition: { x: 139.4, y: 1247.3 },
         width: 36.3,
         height: 233.3
-    },
+    },*/
     {
         id: 'obj1',
-        url: 'assets/obj1.svg',
+        url: 'assets/teste.svg',
         initialPosition: { x: 319.3, y: 190.4 },
         width: 1417.3,
         height: 876.1
-    },
+    },/*
     {
         id: 'obj2',
         url: 'assets/obj2.svg',
@@ -98,7 +98,7 @@ const posterConfig = [
         initialPosition: { x: 1919.7, y: 2338.2 },
         width: 17.5,
         height: 240.7
-    },
+    },*/
 ];
 let globalScale = 1;
 let globalMargin = 0.9;
@@ -255,7 +255,6 @@ function setupInteractions() {
 
                     if (event.scale !== 1) {
                         const reducedScaleChange = 1 + ((event.scale - 1) / 3);
-                        
                         const newScale = svgData.scale * reducedScaleChange;
                         svgData.scale = Math.max(0.1, Math.min(5, newScale));
                     }
